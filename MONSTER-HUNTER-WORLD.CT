@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="31">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>2</ID>
+      <Description>"修改金币"</Description>
+      <Options moHideChildren="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(gold_INJECT,MonsterHunterWorld.exe,8B B8 94 00 00 00 3B)
+alloc(newmem,$1000,"MonsterHunterWorld.exe"+2041C5DC)
+
+label(code)
+label(return)
+label(pGold)
+
+newmem:
+  // 在每次访问金币前，将金币设置为4000
+  mov [rax+00000094],#9999999
+  mov [pGold],rax
+code:
+  mov edi,[rax+00000094]
+  jmp return
+align 10 CC
+pGold:
+  dq 0
+
+gold_INJECT:
+  jmp newmem
+  nop
+return:
+registersymbol(gold_INJECT pGold)
+
+[DISABLE]
+
+gold_INJECT:
+  db 8B B8 94 00 00 00
+
+unregistersymbol(gold_INJECT pGold)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "MonsterHunterWorld.exe"+2041C5DC
+
+"MonsterHunterWorld.exe"+2041C5AF: 48 48                             -  dec rax
+"MonsterHunterWorld.exe"+2041C5B1: 01 00                             -  add [rax],eax
+"MonsterHunterWorld.exe"+2041C5B3: 00 00                             -  add [rax],al
+"MonsterHunterWorld.exe"+2041C5B5: 66 66 2E 0F 1F 84 00 00 00 00 00  -  nop word ptr cs:[rax+rax+00000000]
+"MonsterHunterWorld.exe"+2041C5C0: 48 89 5C 24 08                    -  mov [rsp+08],rbx
+"MonsterHunterWorld.exe"+2041C5C5: 57                                -  push rdi
+"MonsterHunterWorld.exe"+2041C5C6: 48 81 EC A0 00 00 00              -  sub rsp,000000A0
+"MonsterHunterWorld.exe"+2041C5CD: 48 89 CB                          -  mov rbx,rcx
+"MonsterHunterWorld.exe"+2041C5D0: 48 8B 0D 89 E4 B9 E4              -  mov rcx,[MonsterHunterWorld.exe+4FBAA60]
+"MonsterHunterWorld.exe"+2041C5D7: E8 24 31 71 E1                    -  call MonsterHunterWorld.exe+1B2F700
+// ---------- INJECTING HERE ----------
+"MonsterHunterWorld.exe"+2041C5DC: 8B B8 94 00 00 00                 -  mov edi,[rax+00000094]
+// ---------- DONE INJECTING  ----------
+"MonsterHunterWorld.exe"+2041C5E2: 3B BB F8 28 00 00                 -  cmp edi,[rbx+000028F8]
+"MonsterHunterWorld.exe"+2041C5E8: 74 2A                             -  je MonsterHunterWorld.exe+2041C614
+"MonsterHunterWorld.exe"+2041C5EA: 41 89 F8                          -  mov r8d,edi
+"MonsterHunterWorld.exe"+2041C5ED: C6 44 24 20 00                    -  mov byte ptr [rsp+20],00
+"MonsterHunterWorld.exe"+2041C5F2: 48 8D 15 9B BA AC E2              -  lea rdx,[MonsterHunterWorld.exe+2EE8094]
+"MonsterHunterWorld.exe"+2041C5F9: 48 8D 4C 24 20                    -  lea rcx,[rsp+20]
+"MonsterHunterWorld.exe"+2041C5FE: E8 1D 6E E3 DF                    -  call MonsterHunterWorld.exe+253420
+"MonsterHunterWorld.exe"+2041C603: 48 8B 8B 00 29 00 00              -  mov rcx,[rbx+00002900]
+"MonsterHunterWorld.exe"+2041C60A: 48 8D 54 24 20                    -  lea rdx,[rsp+20]
+"MonsterHunterWorld.exe"+2041C60F: E8 AC 64 44 E1                    -  call MonsterHunterWorld.exe+1862AC0
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>24</ID>
+          <Description>"Gold"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>[pGold]+94</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>25</ID>
+          <Description>"pGold"</Description>
+          <VariableType>4 Bytes</VariableType>
+          <Address>"MonsterHunterWorld.exe"+04C5FD40</Address>
+          <Offsets>
+            <Offset>94</Offset>
+            <Offset>70</Offset>
+            <Offset>110</Offset>
+            <Offset>B8</Offset>
+            <Offset>290</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>10</ID>
+      <Description>"无限耐力 base"</Description>
+      <Options moHideChildren="1" moDeactivateChildrenAsWell="1"/>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(nhttn_INJECT,MonsterHunterWorld.exe,F3 0F 11 41 6C C3 4C)
+alloc(newmem,$1000,"MonsterHunterWorld.exe"+CE7462A)
+
+label(code)
+label(return)
+label(pNl)
+
+newmem:
+  mov [pNl],rcx
+  mov [rcx+74],(float)100
+code:
+  mov [rcx+6C],(float)100
+  jmp return
+align 10 CC
+pNl:
+  dq 0
+
+
+nhttn_INJECT:
+  jmp newmem
+return:
+registersymbol(nhttn_INJECT pNl)
+
+[DISABLE]
+
+nhttn_INJECT:
+  db F3 0F 11 41 6C
+
+unregistersymbol(nhttn_INJECT pNl)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "MonsterHunterWorld.exe"+CE7462A
+
+"MonsterHunterWorld.exe"+CE7460A: 1F                    -  pop ds
+"MonsterHunterWorld.exe"+CE7460B: 80 00 00              -  add byte ptr [rax],00
+"MonsterHunterWorld.exe"+CE7460E: 00 00                 -  add [rax],al
+"MonsterHunterWorld.exe"+CE74610: F3 0F 10 51 6C        -  movss xmm2,[rcx+6C]
+"MonsterHunterWorld.exe"+CE74615: 0F 57 C0              -  xorps xmm0,xmm0
+"MonsterHunterWorld.exe"+CE74618: F3 0F 5C D1           -  subss xmm2,xmm1
+"MonsterHunterWorld.exe"+CE7461C: 0F 2F D0              -  comiss xmm2,xmm0
+"MonsterHunterWorld.exe"+CE7461F: 72 09                 -  jb MonsterHunterWorld.exe+CE7462A
+"MonsterHunterWorld.exe"+CE74621: F3 0F 10 41 74        -  movss xmm0,[rcx+74]
+"MonsterHunterWorld.exe"+CE74626: F3 0F 5D C2           -  minss xmm0,xmm2
+// ---------- INJECTING HERE ----------
+"MonsterHunterWorld.exe"+CE7462A: F3 0F 11 41 6C        -  movss [rcx+6C],xmm0
+// ---------- DONE INJECTING  ----------
+"MonsterHunterWorld.exe"+CE7462F: C3                    -  ret 
+"MonsterHunterWorld.exe"+CE74630: 4C 8B 0C 24           -  mov r9,[rsp]
+"MonsterHunterWorld.exe"+CE74634: 54                    -  push rsp
+"MonsterHunterWorld.exe"+CE74635: 48 83 04 24 07        -  add qword ptr [rsp],07
+"MonsterHunterWorld.exe"+CE7463A: 48 FF 04 24           -  inc [rsp]
+"MonsterHunterWorld.exe"+CE7463E: 48 8B 24 24           -  mov rsp,[rsp]
+"MonsterHunterWorld.exe"+CE74642: 48 8B 34 24           -  mov rsi,[rsp]
+"MonsterHunterWorld.exe"+CE74646: 48 8B 04 24           -  mov rax,[rsp]
+"MonsterHunterWorld.exe"+CE7464A: 50                    -  push rax
+"MonsterHunterWorld.exe"+CE7464B: 48 F7 D0              -  not rax
+}
+</AssemblerScript>
+      <CheatEntries>
+        <CheatEntry>
+          <ID>11</ID>
+          <Description>"耐力"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[pNl]+6c</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>12</ID>
+          <Description>"耐力上限"</Description>
+          <VariableType>Float</VariableType>
+          <Address>[pNl]+74</Address>
+        </CheatEntry>
+        <CheatEntry>
+          <ID>22</ID>
+          <Description>"lp耐力上限"</Description>
+          <VariableType>Float</VariableType>
+          <Address>"MonsterHunterWorld.exe"+04FBAAB0</Address>
+          <Offsets>
+            <Offset>574</Offset>
+            <Offset>2C0</Offset>
+            <Offset>B8</Offset>
+            <Offset>A8</Offset>
+            <Offset>50</Offset>
+          </Offsets>
+        </CheatEntry>
+      </CheatEntries>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>15</ID>
+      <Description>"无敌"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(gakdjkansd_INJECT,MonsterHunterWorld.exe,74 05 E8 CB 38 A8 E0)
+alloc(newmem,$1000,"MonsterHunterWorld.exe"+2072EAAE)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  jmp MonsterHunterWorld.exe+2072EAB5
+  call MonsterHunterWorld.exe+11B2380
+  jmp return
+
+gakdjkansd_INJECT:
+  jmp newmem
+  nop 2
+return:
+registersymbol(gakdjkansd_INJECT)
+
+[DISABLE]
+
+gakdjkansd_INJECT:
+  db 74 05 E8 CB 38 A8 E0
+
+unregistersymbol(gakdjkansd_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "MonsterHunterWorld.exe"+2072EAAE
+
+"MonsterHunterWorld.exe"+2072EA80: 48 81 C1 E7 0A 6C 81  -  add rcx,FFFFFFFF816C0AE7
+"MonsterHunterWorld.exe"+2072EA87: 48 89 91 19 F5 93 7E  -  mov [rcx+7E93F519],rdx
+"MonsterHunterWorld.exe"+2072EA8E: 48 8D 15 05 48 40 E5  -  lea rdx,[MonsterHunterWorld.exe+5B3329A]
+"MonsterHunterWorld.exe"+2072EA95: 59                    -  pop rcx
+"MonsterHunterWorld.exe"+2072EA96: 48 87 14 24           -  xchg [rsp],rdx
+"MonsterHunterWorld.exe"+2072EA9A: C3                    -  ret 
+"MonsterHunterWorld.exe"+2072EA9B: 0F 1F 44 00 00        -  nop dword ptr [rax+rax+00]
+"MonsterHunterWorld.exe"+2072EAA0: 48 83 EC 28           -  sub rsp,28
+"MonsterHunterWorld.exe"+2072EAA4: 48 8B 89 58 76 00 00  -  mov rcx,[rcx+00007658]
+"MonsterHunterWorld.exe"+2072EAAB: 48 85 C9              -  test rcx,rcx
+// ---------- INJECTING HERE ----------
+"MonsterHunterWorld.exe"+2072EAAE: 74 05                 -  je MonsterHunterWorld.exe+2072EAB5
+"MonsterHunterWorld.exe"+2072EAB0: E8 CB 38 A8 E0        -  call MonsterHunterWorld.exe+11B2380
+// ---------- DONE INJECTING  ----------
+"MonsterHunterWorld.exe"+2072EAB5: 31 C0                 -  xor eax,eax
+"MonsterHunterWorld.exe"+2072EAB7: 48 83 C4 28           -  add rsp,28
+"MonsterHunterWorld.exe"+2072EABB: C3                    -  ret 
+"MonsterHunterWorld.exe"+2072EABC: CC                    -  int 3 
+"MonsterHunterWorld.exe"+2072EABD: 48 8B 1C 24           -  mov rbx,[rsp]
+"MonsterHunterWorld.exe"+2072EAC1: 48 89 2C 24           -  mov [rsp],rbp
+"MonsterHunterWorld.exe"+2072EAC5: 48 8D 2D FC 6D E5 F0  -  lea rbp,[MonsterHunterWorld.exe+115858C8]
+"MonsterHunterWorld.exe"+2072EACC: 48 87 2C 24           -  xchg [rsp],rbp
+"MonsterHunterWorld.exe"+2072EAD0: C3                    -  ret 
+"MonsterHunterWorld.exe"+2072EAD1: B1 4E                 -  mov cl,4E
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>17</ID>
+      <Description>"一击必杀"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>[ENABLE]
+aobscanmodule(bhuijjd_INJECT,MonsterHunterWorld.exe,0F 2F 78 64 73 0D)
+alloc(newmem,$1000,"MonsterHunterWorld.exe"+1FD52261)
+
+label(code)
+label(return)
+
+newmem:
+  mov [rax+64],0
+code:
+  comiss xmm7,[rax+64]
+  jae MonsterHunterWorld.exe+1FD52274
+  jmp return
+
+bhuijjd_INJECT:
+  jmp newmem
+  nop
+return:
+registersymbol(bhuijjd_INJECT)
+
+[DISABLE]
+
+bhuijjd_INJECT:
+  db 0F 2F 78 64 73 0D
+
+unregistersymbol(bhuijjd_INJECT)
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "MonsterHunterWorld.exe"+1FD52261
+
+"MonsterHunterWorld.exe"+1FD52237: 48 89 F2              -  mov rdx,rsi
+"MonsterHunterWorld.exe"+1FD5223A: 48 89 D9              -  mov rcx,rbx
+"MonsterHunterWorld.exe"+1FD5223D: FF 90 20 06 00 00     -  call qword ptr [rax+00000620]
+"MonsterHunterWorld.exe"+1FD52243: 84 C0                 -  test al,al
+"MonsterHunterWorld.exe"+1FD52245: 0F 85 A0 03 00 00     -  jne MonsterHunterWorld.exe+1FD525EB
+"MonsterHunterWorld.exe"+1FD5224B: 8B 47 60              -  mov eax,[rdi+60]
+"MonsterHunterWorld.exe"+1FD5224E: 48 C1 E8 09           -  shr rax,09
+"MonsterHunterWorld.exe"+1FD52252: A8 01                 -  test al,01
+"MonsterHunterWorld.exe"+1FD52254: 0F 85 91 03 00 00     -  jne MonsterHunterWorld.exe+1FD525EB
+"MonsterHunterWorld.exe"+1FD5225A: 48 8B 83 70 76 00 00  -  mov rax,[rbx+00007670]
+// ---------- INJECTING HERE ----------
+"MonsterHunterWorld.exe"+1FD52261: 0F 2F 78 64           -  comiss xmm7,[rax+64]
+"MonsterHunterWorld.exe"+1FD52265: 73 0D                 -  jae MonsterHunterWorld.exe+1FD52274
+// ---------- DONE INJECTING  ----------
+"MonsterHunterWorld.exe"+1FD52267: 8B 83 B0 EA 01 00     -  mov eax,[rbx+0001EAB0]
+"MonsterHunterWorld.exe"+1FD5226D: C1 E8 0A              -  shr eax,0A
+"MonsterHunterWorld.exe"+1FD52270: A8 01                 -  test al,01
+"MonsterHunterWorld.exe"+1FD52272: 74 14                 -  je MonsterHunterWorld.exe+1FD52288
+"MonsterHunterWorld.exe"+1FD52274: 48 8B 46 08           -  mov rax,[rsi+08]
+"MonsterHunterWorld.exe"+1FD52278: 8B 48 60              -  mov ecx,[rax+60]
+"MonsterHunterWorld.exe"+1FD5227B: 48 C1 E9 0A           -  shr rcx,0A
+"MonsterHunterWorld.exe"+1FD5227F: F6 C1 01              -  test cl,01
+"MonsterHunterWorld.exe"+1FD52282: 0F 85 63 03 00 00     -  jne MonsterHunterWorld.exe+1FD525EB
+"MonsterHunterWorld.exe"+1FD52288: 48 8B 86 B8 00 00 00  -  mov rax,[rsi+000000B8]
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>20</ID>
+      <Description>"仓库材料"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>define(address,"MonsterHunterWorld.exe"+1FFBC4F3)
+define(bytes,8B 70 08 8B 68 0C)
+
+[ENABLE]
+
+assert(address,bytes)
+alloc(newmem,$1000,"MonsterHunterWorld.exe"+1FFBC4F3)
+
+label(code)
+label(return)
+
+newmem:
+  mov [rax+0C],#888
+code:
+  mov esi,[rax+08]
+  mov ebp,[rax+0C]
+  jmp return
+
+address:
+  jmp newmem
+  nop
+return:
+
+[DISABLE]
+
+address:
+  db bytes
+  // mov esi,[rax+08]
+  // mov ebp,[rax+0C]
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "MonsterHunterWorld.exe"+1FFBC4F3
+
+"MonsterHunterWorld.exe"+1FFBC4D3: 89 EA                    -  mov edx,ebp
+"MonsterHunterWorld.exe"+1FFBC4D5: E8 B6 39 33 E1           -  call MonsterHunterWorld.exe+12EFE90
+"MonsterHunterWorld.exe"+1FFBC4DA: EB 12                    -  jmp MonsterHunterWorld.exe+1FFBC4EE
+"MonsterHunterWorld.exe"+1FFBC4DC: E8 1F 32 B7 E1           -  call MonsterHunterWorld.exe+1B2F700
+"MonsterHunterWorld.exe"+1FFBC4E1: 48 89 C1                 -  mov rcx,rax
+"MonsterHunterWorld.exe"+1FFBC4E4: 45 89 F0                 -  mov r8d,r14d
+"MonsterHunterWorld.exe"+1FFBC4E7: 89 EA                    -  mov edx,ebp
+"MonsterHunterWorld.exe"+1FFBC4E9: E8 E2 39 33 E1           -  call MonsterHunterWorld.exe+12EFED0
+"MonsterHunterWorld.exe"+1FFBC4EE: 48 85 C0                 -  test rax,rax
+"MonsterHunterWorld.exe"+1FFBC4F1: 74 08                    -  je MonsterHunterWorld.exe+1FFBC4FB
+// ---------- INJECTING HERE ----------
+"MonsterHunterWorld.exe"+1FFBC4F3: 8B 70 08                 -  mov esi,[rax+08]
+"MonsterHunterWorld.exe"+1FFBC4F6: 8B 68 0C                 -  mov ebp,[rax+0C]
+// ---------- DONE INJECTING  ----------
+"MonsterHunterWorld.exe"+1FFBC4F9: EB 04                    -  jmp MonsterHunterWorld.exe+1FFBC4FF
+"MonsterHunterWorld.exe"+1FFBC4FB: 31 F6                    -  xor esi,esi
+"MonsterHunterWorld.exe"+1FFBC4FD: 31 ED                    -  xor ebp,ebp
+"MonsterHunterWorld.exe"+1FFBC4FF: 83 BB C4 30 00 00 02     -  cmp dword ptr [rbx+000030C4],02
+"MonsterHunterWorld.exe"+1FFBC506: 48 8B 83 F0 28 00 00     -  mov rax,[rbx+000028F0]
+"MonsterHunterWorld.exe"+1FFBC50D: 8B 88 74 02 00 00        -  mov ecx,[rax+00000274]
+"MonsterHunterWorld.exe"+1FFBC513: 75 09                    -  jne MonsterHunterWorld.exe+1FFBC51E
+"MonsterHunterWorld.exe"+1FFBC515: 44 39 F1                 -  cmp ecx,r14d
+"MonsterHunterWorld.exe"+1FFBC518: 75 17                    -  jne MonsterHunterWorld.exe+1FFBC531
+"MonsterHunterWorld.exe"+1FFBC51A: 31 D2                    -  xor edx,edx
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>23</ID>
+      <Description>"每隔400毫秒将耐力改为100"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{$lua}
+
+if syntaxcheck then return end
+
+[ENABLE]
+
+
+nlidTimer = setInterval(function()
+ writeFloat("[[[[[MonsterHunterWorld.exe+04FBAAB0]+50]+A8]+B8]+2C0]+56C", 100)
+end, 400)
+
+ 
+ 
+[DISABLE]
+clearInterval(nlidTimer)
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>21</ID>
+      <Description>"lp耐力"</Description>
+      <VariableType>Float</VariableType>
+      <Address>"MonsterHunterWorld.exe"+04FBAAB0</Address>
+      <Offsets>
+        <Offset>56C</Offset>
+        <Offset>2C0</Offset>
+        <Offset>B8</Offset>
+        <Offset>A8</Offset>
+        <Offset>50</Offset>
+      </Offsets>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>26</ID>
+      <Description>"修改字节集"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>define(address,"MonsterHunterWorld.exe"+CE7462A)
+define(bytes,F3 0F 11 41 6C)
+
+[ENABLE]
+assert(address,bytes)
+
+address:
+  db 90 90 90 90 90
+
+[DISABLE]
+address:
+  db bytes
+
+{
+// ORIGINAL CODE - INJECTION POINT: "MonsterHunterWorld.exe"+CE7462A
+
+"MonsterHunterWorld.exe"+CE7460A: 1F                    -  pop ds
+"MonsterHunterWorld.exe"+CE7460B: 80 00 00              -  add byte ptr [rax],00
+"MonsterHunterWorld.exe"+CE7460E: 00 00                 -  add [rax],al
+"MonsterHunterWorld.exe"+CE74610: F3 0F 10 51 6C        -  movss xmm2,[rcx+6C]
+"MonsterHunterWorld.exe"+CE74615: 0F 57 C0              -  xorps xmm0,xmm0
+"MonsterHunterWorld.exe"+CE74618: F3 0F 5C D1           -  subss xmm2,xmm1
+"MonsterHunterWorld.exe"+CE7461C: 0F 2F D0              -  comiss xmm2,xmm0
+"MonsterHunterWorld.exe"+CE7461F: 72 09                 -  jb MonsterHunterWorld.exe+CE7462A
+"MonsterHunterWorld.exe"+CE74621: F3 0F 10 41 74        -  movss xmm0,[rcx+74]
+"MonsterHunterWorld.exe"+CE74626: F3 0F 5D C2           -  minss xmm0,xmm2
+// ---------- INJECTING HERE ----------
+"MonsterHunterWorld.exe"+CE7462A: F3 0F 11 41 6C        -  movss [rcx+6C],xmm0
+// ---------- DONE INJECTING  ----------
+"MonsterHunterWorld.exe"+CE7462F: C3                    -  ret 
+"MonsterHunterWorld.exe"+CE74630: 4C 8B 0C 24           -  mov r9,[rsp]
+"MonsterHunterWorld.exe"+CE74634: 54                    -  push rsp
+"MonsterHunterWorld.exe"+CE74635: 48 83 04 24 07        -  add qword ptr [rsp],07
+"MonsterHunterWorld.exe"+CE7463A: 48 FF 04 24           -  inc [rsp]
+"MonsterHunterWorld.exe"+CE7463E: 48 8B 24 24           -  mov rsp,[rsp]
+"MonsterHunterWorld.exe"+CE74642: 48 8B 34 24           -  mov rsi,[rsp]
+"MonsterHunterWorld.exe"+CE74646: 48 8B 04 24           -  mov rax,[rsp]
+"MonsterHunterWorld.exe"+CE7464A: 50                    -  push rax
+"MonsterHunterWorld.exe"+CE7464B: 48 F7 D0              -  not rax
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>27</ID>
+      <Description>"绕行挂钩"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>define(address,"MonsterHunterWorld.exe"+CE7462A)
+define(bytes,F3 0F 11 41 6C)
+
+[ENABLE]
+assert(address,bytes)
+alloc(newmem,$1000,"MonsterHunterWorld.exe"+CE7462A)
+
+label(return)
+
+newmem:
+  mov [rcx+6C],(float)100
+  jmp return
+
+address:
+  jmp newmem
+return:
+
+[DISABLE]
+address:
+  db bytes
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "MonsterHunterWorld.exe"+CE7462A
+
+"MonsterHunterWorld.exe"+CE7460A: 1F                    -  pop ds
+"MonsterHunterWorld.exe"+CE7460B: 80 00 00              -  add byte ptr [rax],00
+"MonsterHunterWorld.exe"+CE7460E: 00 00                 -  add [rax],al
+"MonsterHunterWorld.exe"+CE74610: F3 0F 10 51 6C        -  movss xmm2,[rcx+6C]
+"MonsterHunterWorld.exe"+CE74615: 0F 57 C0              -  xorps xmm0,xmm0
+"MonsterHunterWorld.exe"+CE74618: F3 0F 5C D1           -  subss xmm2,xmm1
+"MonsterHunterWorld.exe"+CE7461C: 0F 2F D0              -  comiss xmm2,xmm0
+"MonsterHunterWorld.exe"+CE7461F: 72 09                 -  jb MonsterHunterWorld.exe+CE7462A
+"MonsterHunterWorld.exe"+CE74621: F3 0F 10 41 74        -  movss xmm0,[rcx+74]
+"MonsterHunterWorld.exe"+CE74626: F3 0F 5D C2           -  minss xmm0,xmm2
+// ---------- INJECTING HERE ----------
+"MonsterHunterWorld.exe"+CE7462A: F3 0F 11 41 6C        -  movss [rcx+6C],xmm0
+// ---------- DONE INJECTING  ----------
+"MonsterHunterWorld.exe"+CE7462F: C3                    -  ret 
+"MonsterHunterWorld.exe"+CE74630: 4C 8B 0C 24           -  mov r9,[rsp]
+"MonsterHunterWorld.exe"+CE74634: 54                    -  push rsp
+"MonsterHunterWorld.exe"+CE74635: 48 83 04 24 07        -  add qword ptr [rsp],07
+"MonsterHunterWorld.exe"+CE7463A: 48 FF 04 24           -  inc [rsp]
+"MonsterHunterWorld.exe"+CE7463E: 48 8B 24 24           -  mov rsp,[rsp]
+"MonsterHunterWorld.exe"+CE74642: 48 8B 34 24           -  mov rsi,[rsp]
+"MonsterHunterWorld.exe"+CE74646: 48 8B 04 24           -  mov rax,[rsp]
+"MonsterHunterWorld.exe"+CE7464A: 50                    -  push rax
+"MonsterHunterWorld.exe"+CE7464B: 48 F7 D0              -  not rax
+}
+
+{
+172130000 - C7 41 6C 0000C842     - mov [rcx+6C],42C80000
+172130007 - E9 2346D4DA           - jmp 14CE7462F
+}
+</AssemblerScript>
+    </CheatEntry>
+    <CheatEntry>
+      <ID>28</ID>
+      <Description>"异常状态加hp"</Description>
+      <LastState/>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>define(address,"MonsterHunterWorld.exe"+C949C4B)
+define(bytes,41 0F 28 C8 E8 4C 70 5A F5)
+
+[ENABLE]
+assert(address, bytes)
+
+address:
+  db 0F 28 CF 90 E8 4C 70 5A F5
+
+[DISABLE]
+address:
+  db 41 0F 28 C8 E8 4C 70 5A F5
+
+
+{
+// ORIGINAL CODE - INJECTION POINT: "MonsterHunterWorld.exe"+C949C4B
+
+"MonsterHunterWorld.exe"+C949C2B: 48 89 D9                 -  mov rcx,rbx
+"MonsterHunterWorld.exe"+C949C2E: E8 FD 45 81 F4           -  call MonsterHunterWorld.exe+115E230
+"MonsterHunterWorld.exe"+C949C33: 84 C0                    -  test al,al
+"MonsterHunterWorld.exe"+C949C35: 74 0B                    -  je MonsterHunterWorld.exe+C949C42
+"MonsterHunterWorld.exe"+C949C37: 48 89 D9                 -  mov rcx,rbx
+"MonsterHunterWorld.exe"+C949C3A: E8 11 AA 81 F4           -  call MonsterHunterWorld.exe+1164650
+"MonsterHunterWorld.exe"+C949C3F: 40 B6 01                 -  mov sil,01
+"MonsterHunterWorld.exe"+C949C42: 48 8B 4F 60              -  mov rcx,[rdi+60]
+"MonsterHunterWorld.exe"+C949C46: 40 84 F6                 -  test sil,sil
+"MonsterHunterWorld.exe"+C949C49: 75 0B                    -  jne MonsterHunterWorld.exe+C949C56
+// ---------- INJECTING HERE ----------
+"MonsterHunterWorld.exe"+C949C4B: 41 0F 28 C8              -  movaps xmm1,xmm8
+"MonsterHunterWorld.exe"+C949C4F: E8 4C 70 5A F5           -  call MonsterHunterWorld.exe+1EF0CA0
+// ---------- DONE INJECTING  ----------
+"MonsterHunterWorld.exe"+C949C54: EB 08                    -  jmp MonsterHunterWorld.exe+C949C5E
+"MonsterHunterWorld.exe"+C949C56: 0F 28 CF                 -  movaps xmm1,xmm7
+"MonsterHunterWorld.exe"+C949C59: E8 32 80 5C F5           -  call MonsterHunterWorld.exe+1F11C90
+"MonsterHunterWorld.exe"+C949C5E: 44 0F 28 44 24 50        -  movaps xmm8,[rsp+50]
+"MonsterHunterWorld.exe"+C949C64: 48 8B 4F 60              -  mov rcx,[rdi+60]
+"MonsterHunterWorld.exe"+C949C68: E8 A3 79 5B F5           -  call MonsterHunterWorld.exe+1F01610
+"MonsterHunterWorld.exe"+C949C6D: 41 0F 2F C2              -  comiss xmm0,xmm10
+"MonsterHunterWorld.exe"+C949C71: 44 0F 28 4C 24 40        -  movaps xmm9,[rsp+40]
+"MonsterHunterWorld.exe"+C949C77: 0F 28 7C 24 60           -  movaps xmm7,[rsp+60]
+"MonsterHunterWorld.exe"+C949C7C: 73 21                    -  jae MonsterHunterWorld.exe+C949C9F
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry Color="20000000">
+      <Description>修改hp</Description>
+      <AddressString>MonsterHunterWorld.exe+C93D9A5</AddressString>
+      <Before>
+        <Byte>60</Byte>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>5D</Byte>
+        <Byte>C1</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>11</Byte>
+        <Byte>41</Byte>
+        <Byte>64</Byte>
+      </Actual>
+      <After>
+        <Byte>48</Byte>
+        <Byte>8B</Byte>
+        <Byte>41</Byte>
+        <Byte>68</Byte>
+        <Byte>F3</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>判断玩家是否受到攻击</Description>
+      <AddressString>MonsterHunterWorld.exe+2072EAAE</AddressString>
+      <Before>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>48</Byte>
+        <Byte>85</Byte>
+        <Byte>C9</Byte>
+      </Before>
+      <Actual>
+        <Byte>EB</Byte>
+        <Byte>05</Byte>
+      </Actual>
+      <After>
+        <Byte>E8</Byte>
+        <Byte>CB</Byte>
+        <Byte>38</Byte>
+        <Byte>A8</Byte>
+        <Byte>E0</Byte>
+      </After>
+    </CodeEntry>
+    <CodeEntry Color="20000000">
+      <Description>替换了 call MonsterHunterWorld.exe+11B0E50</Description>
+      <AddressString>MonsterHunterWorld.exe+2072F36A</AddressString>
+      <Before>
+        <Byte>31</Byte>
+        <Byte>C0</Byte>
+        <Byte>0F</Byte>
+        <Byte>28</Byte>
+        <Byte>C8</Byte>
+      </Before>
+      <Actual>
+        <Byte>E8</Byte>
+        <Byte>E1</Byte>
+        <Byte>1A</Byte>
+        <Byte>A8</Byte>
+        <Byte>E0</Byte>
+      </Actual>
+      <After>
+        <Byte>0F</Byte>
+        <Byte>28</Byte>
+        <Byte>74</Byte>
+        <Byte>24</Byte>
+        <Byte>30</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+</CheatTable>
